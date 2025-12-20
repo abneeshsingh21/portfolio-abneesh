@@ -26,11 +26,15 @@ function App() {
     )
   }
 
+  // Responsive FOV: Zoom out on mobile (50) to see more horizontally, Zoom in on Desktop (35) for cinematic look
+  const isMobile = window.innerWidth < 768
+  const responsiveFov = isMobile ? 50 : 35
+
   return (
     <>
       <Canvas
         shadows
-        camera={{ position: [0, 0, 5], fov: 35 }}
+        camera={{ position: [0, 0, 5], fov: responsiveFov }}
         gl={{ antialias: false, stencil: false, alpha: false }}
         dpr={[1, 1.5]} 
       >

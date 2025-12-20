@@ -46,8 +46,8 @@ export default function SoundController() {
         onClick={toggleSound}
         style={{
             position: 'fixed',
-            bottom: '2rem',
-            left: '2rem',
+            bottom: window.innerWidth < 768 ? '1.5rem' : '2rem', // Adjusted for mobile
+            left: window.innerWidth < 768 ? '1.5rem' : '2rem',
             zIndex: 2000,
             background: playing ? 'rgba(0, 243, 255, 0.2)' : 'rgba(0,0,0,0.5)',
             border: '1px solid #00f3ff',

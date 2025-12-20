@@ -1,4 +1,5 @@
 import { useStore } from '../store'
+// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion'
 
 const contentData = {
@@ -29,7 +30,7 @@ const contentData = {
   CONTACT: {
     title: "ESTABLISH UPLINK",
     subtitle: "Open Channels",
-    body: "Ready to collaborate on the next big breakthrough? My comms are open.\n\nEmail: abneesh@example.com\nGitHub: github.com/abneesh\nLinkedIn: linkedin.com/in/abneesh\n\n**I am driven by one goal: to build intelligent systems that actually work in the real world.**",
+    body: "Ready to collaborate on the next big breakthrough? My comms are open.\n\nEmail: singhabneesh250@gmail.com\nGitHub: github.com/abneeshsingh21/portfolio-abneesh\nLinkedIn: linkedin.com/in/abneesh-singh001\n\n**I am driven by one goal: to build intelligent systems that actually work in the real world.**",
     tags: ["Collaboration", "Hiring", "Consulting"]
   }
 }
@@ -45,14 +46,44 @@ export default function SectionDetails() {
 
   if (!content) return null
 
-  // Helper to parse **bold** text
+  // Helper to parse **bold** text and [links]
   const parseBody = (text) => {
       if(!text) return null
-      return text.split(/(\*\*.*?\*\*)/).map((part, i) => {
+      
+      // Split by newlines first to handle paragraph breaks if needed, or just keep as is.
+      // We will perform a multi-pass regex replacement strategy.
+      
+      // Regexes
+      const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+|github\.com\/[^\s]+|linkedin\.com\/[^\s]+)/g
+      const emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/g
+      const boldRegex = /(\*\*.*?\*\*)/g
+
+      // Helper to process a string for links/emails
+      const processLinks = (str) => {
+        // Split by URL
+        return str.split(urlRegex).map((part, i) => {
+            if (part.match(urlRegex)) {
+                let href = part
+                if (!href.startsWith('http')) href = 'https://' + href
+                return <a key={`link-${i}`} href={href} target="_blank" rel="noopener noreferrer" style={{color: '#00f3ff', textDecoration: 'underline'}}>{part}</a>
+            }
+            // Split by Email
+            return part.split(emailRegex).map((subPart, j) => {
+                if (subPart.match(emailRegex)) {
+                    return <a key={`email-${i}-${j}`} href={`mailto:${subPart}`} style={{color: '#00f3ff', textDecoration: 'underline'}}>{subPart}</a>
+                }
+                return subPart
+            })
+        })
+      }
+
+      // First split by bold
+      return text.split(boldRegex).map((part, i) => {
           if (part.startsWith('**') && part.endsWith('**')) {
               return <strong key={i} style={{color: '#fff'}}>{part.slice(2, -2)}</strong>
           }
-          return part
+          // Only process links in non-bold text
+          return <span key={i}>{processLinks(part)}</span>
       })
   }
 
@@ -85,14 +116,16 @@ export default function SectionDetails() {
                 onClick={() => setActiveSection(null)}
                 style={{
                     position: 'absolute',
-                    top: '2rem',
-                    right: '2rem',
+                    top: isMobile ? '1.5rem' : '2rem',
+                    right: isMobile ? '1.5rem' : '2rem',
                     background: 'none',
                     border: '1px solid #333',
                     color: '#666',
                     cursor: 'pointer',
-                    padding: '0.5rem 1rem',
-                    fontSize: '1.2rem'
+                    padding: isMobile ? '0.8rem 1.2rem' : '0.5rem 1rem', // Larger touch target on mobile
+                    fontSize: isMobile ? '1rem' : '1.2rem',
+                    zIndex: 1001, // Ensure it's above content
+                    backdropFilter: 'blur(5px)' // improved contrast
                 }}
             >
                 ✕ CLOSE
