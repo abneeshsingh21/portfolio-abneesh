@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { playClick } from '../utils/sound'
+import { getAssetPath } from '../utils/assets'
 
 export default function SoundController() {
   const [playing, setPlaying] = useState(false)
@@ -7,7 +8,7 @@ export default function SoundController() {
 
   useEffect(() => {
     // Initialize Audio
-    audioRef.current = new Audio('/audio/bgm.mp3')
+    audioRef.current = new Audio(getAssetPath('/audio/bgm.mp3'))
     audioRef.current.loop = true
     audioRef.current.volume = 0.4
 

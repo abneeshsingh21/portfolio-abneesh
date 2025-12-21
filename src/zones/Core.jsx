@@ -37,6 +37,8 @@ const AtmosphereMaterial = shaderMaterial(
 
 extend({ AtmosphereMaterial })
 
+import { getAssetPath } from '../utils/assets'
+
 export default function Core() {
   const meshRef = useRef()
   const ringRef = useRef()
@@ -45,10 +47,10 @@ export default function Core() {
 
   // Load Textures
   const [earthMap, earthNormal, earthClouds, ringMapOriginal] = useTexture([
-    '/textures/earth_daymap.jpg',
-    '/textures/earth_normal.jpg',
-    '/textures/earth_clouds.png',
-    '/textures/satellite_texture.png'
+    getAssetPath('/textures/earth_daymap.jpg'),
+    getAssetPath('/textures/earth_normal.jpg'),
+    getAssetPath('/textures/earth_clouds.png'),
+    getAssetPath('/textures/satellite_texture.png')
   ])
 
   // Clone and Configure textures safely within useMemo

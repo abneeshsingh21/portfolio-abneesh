@@ -140,14 +140,16 @@ function customColor(year) {
     return '#ffffff'
 }
 
+import { getAssetPath } from '../utils/assets'
+
 export default function Timeline() {
     const setActiveSection = useStore(state => state.setActiveSection)
     
     // Load Textures
     const [rock, ice, gas] = useTexture([
-        '/textures/asteroid_rock.png',
-        '/textures/ice_moon_cyan.png',
-        '/textures/gas_giant_purple.png'
+        getAssetPath('/textures/asteroid_rock.png'),
+        getAssetPath('/textures/ice_moon_cyan.png'),
+        getAssetPath('/textures/gas_giant_purple.png')
     ])
     
     const getTextures = (idx) => {

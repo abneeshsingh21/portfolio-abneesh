@@ -10,10 +10,11 @@ import Skills from '../zones/Skills'
 import Projects from '../zones/Projects'
 import Timeline from '../zones/Timeline'
 import Contact from '../zones/Contact'
+import { getAssetPath } from '../utils/assets'
 // import Nebula from './Nebula' 
 
 function Skybox() {
-  const texture = useTexture('/textures/galaxy_background.png')
+  const texture = useTexture(getAssetPath('/textures/galaxy_background.png'))
   return (
     <Sphere args={[500, 64, 64]} rotation={[0, 0, 0]}>
       <meshBasicMaterial 

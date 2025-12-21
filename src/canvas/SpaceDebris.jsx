@@ -2,10 +2,11 @@ import { useRef, useMemo, useLayoutEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { useTexture } from '@react-three/drei'
 import * as THREE from 'three'
+import { getAssetPath } from '../utils/assets'
 
 export default function SpaceDebris({ count = 600 }) {
   const meshRef = useRef()
-  const texture = useTexture("/textures/asteroid_rock.png")
+  const texture = useTexture(getAssetPath("/textures/asteroid_rock.png"))
 
   // Generate random data for asteroids
   const { positions, rotations, scales } = useMemo(() => {

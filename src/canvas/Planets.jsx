@@ -160,6 +160,8 @@ function Planet({ position, size, texturePath, ringTexturePath, type = "gas", co
   )
 }
 
+import { getAssetPath } from '../utils/assets'
+
 export default function Planets() {
   return (
     <group>
@@ -167,7 +169,7 @@ export default function Planets() {
         <Planet 
             position={[100, 40, -200]}  // Further back, moved right
             size={55}                   // Massive size increase (was 12)
-            texturePath="/textures/jupiter_hd.jpg" 
+            texturePath={getAssetPath("/textures/jupiter_hd.jpg")} 
             color="#e3b98e" 
             atmosphereColor="#ffcc99" 
             type="gas"
@@ -178,8 +180,8 @@ export default function Planets() {
         <Planet 
             position={[-120, -50, -250]} // Deep left background
             size={45}                    // Massive size increase (was 9)
-            texturePath="/textures/saturn_hd.jpg" 
-            ringTexturePath="/textures/saturn_ring_alpha_hd.png"
+            texturePath={getAssetPath("/textures/saturn_hd.jpg")} 
+            ringTexturePath={getAssetPath("/textures/saturn_ring_alpha_hd.png")}
             color="#f4d03f" 
             atmosphereColor="#ebd7a0" 
             type="ringed"
@@ -191,7 +193,7 @@ export default function Planets() {
         <Planet 
             position={[-80, 90, -300]}  // High left background
             size={35}                   // Massive size increase (was 8)
-            texturePath="/textures/neptune_hd.jpg" 
+            texturePath={getAssetPath("/textures/neptune_hd.jpg")} 
             color="#3355ff"
             atmosphereColor="#0044ff" 
             type="gas"
