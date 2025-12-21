@@ -26,9 +26,9 @@ function App() {
     )
   }
 
-  // Responsive FOV: Zoom out on mobile (50) to see more horizontally, Zoom in on Desktop (35) for cinematic look
+  // Responsive FOV: Zoom out on mobile (60) to see more horizontally, Zoom in on Desktop (35) for cinematic look
   const isMobile = window.innerWidth < 768
-  const responsiveFov = isMobile ? 50 : 35
+  const responsiveFov = isMobile ? 60 : 35
 
   return (
     <>

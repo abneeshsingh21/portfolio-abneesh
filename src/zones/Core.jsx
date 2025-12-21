@@ -44,6 +44,7 @@ export default function Core() {
   const ringRef = useRef()
   const cloudRef = useRef()
   const setActiveSection = useStore(state => state.setActiveSection)
+  const isMobile = window.innerWidth < 768
 
   // Load Textures
   const [earthMap, earthNormal, earthClouds, ringMapOriginal] = useTexture([
@@ -88,12 +89,12 @@ export default function Core() {
   return (
     <group position={[0, 0, 0]}>
       {/* Introduction Text - Floating & Cinematic */}
-      <group position={[0, 0.5, 0]}>
+      <group position={[0, isMobile ? 1 : 0.5, 0]}> {/* Higher position on mobile to clear planet */}
         <Float speed={2} rotationIntensity={0.2} floatIntensity={0.5}>
             {/* Main Title */}
             <Text 
-                position={[0, 1.5, 0]} 
-                fontSize={0.2} 
+                position={[0, isMobile ? 2 : 1.5, 0]} 
+                fontSize={isMobile ? 0.15 : 0.2} 
                 color="#00aaff" // Dimmed from #00f3ff
                 anchorX="center" 
                 anchorY="middle"
@@ -102,13 +103,15 @@ export default function Core() {
                 WELCOME TO THE UNIVERSE OF
             </Text>
             <Text 
-                position={[0, 0.6, 0]} 
-                fontSize={1} 
+                position={[0, isMobile ? 1.2 : 0.6, 0]} 
+                fontSize={isMobile ? 0.5 : 1} // Halved size for mobile
                 color="#d0d0d0" // Dimmed from white to reduce max bloom
                 anchorX="center" 
                 anchorY="middle"
                 outlineWidth={0.02}
                 outlineColor="#0088aa" // Dimmed outline
+                maxWidth={isMobile ? 4 : 10} // Force wrap if absolutely needed, though size reduction should fix it
+                textAlign="center"
             >
                 ABNEESH SINGH
             </Text>
