@@ -1,7 +1,8 @@
 import { useMemo } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import { useScroll } from '@react-three/drei'
-import * as THREE from 'three'
+import * as THREE from 'three'// Reusable vector for smooth parallax offset
+const parallaxOffset = new THREE.Vector3()
 
 export default function CameraRig() {
   const scroll = useScroll()
@@ -31,19 +32,22 @@ export default function CameraRig() {
       // PROJECT 3: N-CIIA (Right side at X=5) -> Swing Camera Right to X=2.5
       new THREE.Vector3(2.5, 1, -145),  
       
-      new THREE.Vector3(0, 1, -180),  // Transition point BEFORE Timeline
+      // PROJECT 4: EPL (Left side at X=-5) -> Swing Camera Left to X=-2.5
+      new THREE.Vector3(-2.5, 1, -175),  
+
+      new THREE.Vector3(0, 1, -210),  // Transition point BEFORE Timeline
       
       // Timeline Nodes Interaction Path (Objects at +/- 4)
-      new THREE.Vector3(-1.0, 1, -200), // 2022 (Pass Safe)
-      new THREE.Vector3(1.0, 1, -225),  // 2023 (Pass Safe)
-      new THREE.Vector3(-1.0, 1, -250), // 2024 (Pass Safe)
-      new THREE.Vector3(0, 1, -275),  // 2025 (Center)
+      new THREE.Vector3(-1.0, 1, -230), // 2023 (Pass Safe)
+      new THREE.Vector3(1.0, 1, -255),  // 2024 (Pass Safe)
+      new THREE.Vector3(-1.0, 1, -280), // 2025 (Pass Safe)
+      new THREE.Vector3(0, 1, -305),  // 2026 (Center)
 
-      new THREE.Vector3(0, -10, -310),  // Contact Zone (Deep Dive to face the Uplink Tower)
+      new THREE.Vector3(0, -10, -340),  // Contact Zone (Deep Dive to face the Uplink Tower)
     ])
   }, [])
 
-  useFrame(() => {
+  useFrame((state) => {
     // Current scroll progress (0 to 1)
     const t = scroll?.offset ?? 0
 
@@ -51,12 +55,19 @@ export default function CameraRig() {
     const position = curve.getPoint(t)
     // Get a point slightly ahead to look at
     const lookAtPoint = curve.getPoint(Math.min(t + 0.1, 1))
-
-    camera.position.copy(position)
-    camera.lookAt(lookAtPoint)
     
-    // Slight mouse parallax if we wanted
-    // camera.position.x += (state.mouse.x * 0.5 - camera.position.x) * 0.05
+    // Smoothly interpolate the parallax offset
+    parallaxOffset.x = THREE.MathUtils.lerp(parallaxOffset.x, state.pointer.x * 2.0, 0.05)
+    parallaxOffset.y = THREE.MathUtils.lerp(parallaxOffset.y, state.pointer.y * 2.0, 0.05)
+
+    // Apply curve position + smoothed parallax offset
+    camera.position.set(
+        position.x + parallaxOffset.x,
+        position.y + parallaxOffset.y,
+        position.z
+    )
+
+    camera.lookAt(lookAtPoint)
   })
 
   // Visualize path for debug (optional)

@@ -7,31 +7,31 @@ import { playClick } from '../utils/sound'
 
 const timelineData = [
   { 
-      year: '2022', 
+      year: '2023', 
       title: 'Foundation Phase', 
       desc: 'Building Strong Fundamentals', 
       body: "**Built strong fundamentals** in computer science and developed deep interest in AI, ML, and system-level engineering.\n\n- Explored programming beyond syllabus requirements.\n- Mastered Core CS concepts (OS, Networks, DBMS).",
       x: -4, z: 0, color: '#00f3ff' 
   },
   { 
-      year: '2023', 
+      year: '2024', 
       title: 'Skill Expansion', 
       desc: 'Machine Learning & Pipelines', 
       body: "**Started building machine learning models independently**.\n\n- Learned full ML pipelines, not just algorithms.\n- Gained hands-on experience with Python, databases, and backend systems.\n- Moved beyond basic tutorials to complex problem solving.",
       x: 4, z: -25, color: 'cyan' 
   },
   { 
-      year: '2024', 
+      year: '2025', 
       title: 'Product-Oriented', 
       desc: 'Deployment & Real World', 
       body: "**Shifted focus from academic projects to production-grade systems**.\n\n- Built advanced ML applications with deployment and UI.\n- Explored explainable AI and real-world constraints.\n- Focus on reliability and user experience.",
       x: -3, z: -50, color: '#bd00ff' 
   },
   { 
-      year: '2025', 
+      year: '2026', 
       title: 'Advanced Systems', 
-      desc: 'Specialization & Leadership', 
-      body: "**Completed ML internship at ImaginXP – CollegeDekho**.\n\n- Built and deployed the Hybrid Fake News Detector.\n- Developed AI assistants and cybersecurity intelligence system concepts.\n- Focused on scalability, accuracy, and system architecture.",
+      desc: 'Compiler Architecture & Scalability', 
+      body: "**Designed and built EPL (English Programming Language) from scratch**.\n\n- Engineered a custom Lexer, Parser, and AST engine in C and Python.\n- Built and deployed the Hybrid Fake News Detector & N-CIIA platform.\n- Focused on scalability, compiler architecture, and AI autonomy.",
       x: 0, z: -75, color: 'orange' 
   },
 ]
@@ -134,9 +134,9 @@ function TimeNode({ item, position, onClick, texture }) {
 }
 
 function customColor(year) {
-    if(year === '2022') return '#ffffff' 
-    if(year === '2023') return '#e0ffff'
-    if(year === '2024') return '#f0eeff'
+    if(year === '2023') return '#ffffff' 
+    if(year === '2024') return '#e0ffff'
+    if(year === '2025') return '#f0eeff'
     return '#ffffff'
 }
 
@@ -169,7 +169,7 @@ export default function Timeline() {
     }, [])
 
     return (
-        <group position={[0, 0, -200]}>
+        <group position={[0, 0, -230]}>
             {/* Connecting Tube */}
             <Tube args={[curve, 64, 0.1, 8, false]}>
                  <meshStandardMaterial 

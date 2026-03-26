@@ -164,55 +164,98 @@ function CommandRoom() {
     )
 }
 
+function CompilerBlocks() {
+    const ref = useRef()
+    useFrame((state) => {
+        if (ref.current) {
+            ref.current.rotation.y += 0.015
+            ref.current.position.y = Math.sin(state.clock.elapsedTime) * 0.1
+        }
+    })
+    return (
+        <group ref={ref} position={[0, 0.2, 0]}>
+            <RoundedBox args={[0.5, 0.5, 0.5]} position={[-0.8, 0, 0]} radius={0.1}>
+                 <meshStandardMaterial color="#00ffcc" wireframe />
+            </RoundedBox>
+            <Text position={[-0.8, 0.45, 0]} fontSize={0.15} color="#00ffcc" anchorX="center">English AST</Text>
+            
+            <Cylinder args={[0.02, 0.02, 0.6]} rotation={[0, 0, 1.57]} position={[0, 0, 0]}>
+                <meshStandardMaterial color="#fff" />
+            </Cylinder>
+            
+            <RoundedBox args={[0.6, 0.6, 0.6]} position={[0.8, 0, 0]} radius={0.1}>
+                 <meshStandardMaterial color="#00ffcc" emissive="#002222" emissiveIntensity={0.5} />
+            </RoundedBox>
+            <Text position={[0.8, 0.5, 0]} fontSize={0.15} color="#00ffcc" anchorX="center">Bytecode</Text>
+        </group>
+    )
+}
+
 export default function Projects() {
     return (
         <group>
-            {/* PROJECT 1: Fake News - Right Side Z=-85 (Moved back) */}
+            {/* PROJECT 1: Fake News - Right Side Z=-85 */}
             <ProjectDisplay 
                 position={[5, 0, -85]} 
                 title="Hybrid Fake News Detector" 
-                description="Flagship Project | 96.46% Accuracy"
+                description="5-Model Ensemble | 96.46% Accuracy"
                 color="cyan"
                 detailContent={{
                     title: "Hybrid Fake News Detector",
-                    subtitle: "Flagship Project",
-                    body: "**A production-ready fake news detection system designed to operate in real-world conditions.**\n\n**What I Built:**\n- A hybrid verification pipeline combining 5-model ensemble (Logistic Regression, SGD, Calibrated SVC, Random Forest, Gradient Boosting).\n- AI-based credibility analysis and real-time news verification APIs.\n\n**Key Highlights:**\n- TF-IDF with trigrams and 8000 features.\n- Achieved 96.46% accuracy.\n- Explainable AI outputs for transparency.\n- Streamlit UI + FastAPI backend + SQLite database.\n\n**Why It Matters:** Demonstrates end-to-end ML engineering, from data handling to deployment.",
+                    subtitle: "Real-Time Fact Checking Pipeline",
+                    body: "**A blazing fast, production-ready fake news detection system designed for real-world impact.**\n\n**What I Built:**\n- A hybrid verification pipeline utilizing a 5-model deep learning ensemble.\n- Intelligent credibility analysis using real-time API integrations.\n\n**Key Metrics:**\n- Engineered 8000 TF-IDF features.\n- Achieved an astounding **96.46% accuracy**.\n- Streamlit UI powered by a FastAPI & SQLite backend.\n\n**Why It Matters:** Showcases ability to handle massive data, train optimization, and deploy end-to-end ML APIs.",
                     tags: ["ML Ensemble", "FastAPI", "Explainable AI"]
                 }}
             >
                 <PipeLineViz />
             </ProjectDisplay>
 
-            {/* PROJECT 2: Aarii - Left Side Z=-115 (Moved back) */}
+            {/* PROJECT 2: Aarii - Left Side Z=-115 */}
             <ProjectDisplay 
                 position={[-5, 0, -115]} 
-                title="Aarii: AI Voice Assistant" 
+                title="IRA / Aarii: AI Voice Assistant" 
                 description="Holographic Assistant | Local LLM"
                 color="#bd00ff"
                 detailContent={{
-                    title: "Aarii Voice Assistant",
-                    subtitle: "Full Stack Conversational AI",
-                    body: "**A full-stack conversational AI assistant designed for flexibility, extensibility, and real usage.**\n\n**What I Built:**\n- Flask backend with secure API handling.\n- React frontend with holographic visualization.\n- Support for both local and cloud AI models.\n\n**Focus Areas:**\n- Clean architecture and environment-based configuration.\n- Friendly but powerful interaction design.",
-                    tags: ["Generative AI", "React + Flask", "Voice Interaction"]
+                    title: "IRA / Aarii Voice Assistant",
+                    subtitle: "A True Human-like Digital Companion",
+                    body: "**A full-stack conversational AI assistant designed with emotion-awareness, contextual memory, and task execution.**\n\n**What I Built:**\n- Flask backend integrating Groq APIs for ultra-fast response times.\n- React frontend rendering real-time holographic visualizations.\n- Seamless dual-support for local inference and cloud AI models.\n\n**Focus Areas:**\n- Emulating human-like interaction loops.\n- Memory-backed personalized systems.",
+                    tags: ["Generative AI", "Local LLMs", "React + Flask"]
                 }}
             >
                 <AssistantHologram />
             </ProjectDisplay>
 
-            {/* PROJECT 3: N-CIIA - Right Side Z=-145 (Moved further back) */}
+            {/* PROJECT 3: N-CIIA - Right Side Z=-145 */}
             <ProjectDisplay 
                 position={[5, 0, -145]} 
                 title="N-CIIA Cyber Intel" 
-                description="National Cyber Investigation"
+                description="National Cyber Investigation Platform"
                 color="orange"
                 detailContent={{
                     title: "N-CIIA",
-                    subtitle: "National Cyber Investigation & Intelligence Assistant",
-                    body: "**A large-scale cybersecurity intelligence platform focused on lawful detection, analysis, and evidence structuring.**\n\n**System Design Focus:**\n- C++ for packet capture and forensics.\n- Python for machine learning analysis.\n- Go/Rust for high-performance microservices.\n- TypeScript for frontend dashboards.\n\n**Core Values:** Reliability, Scalability, and Ethical Boundaries.",
-                    tags: ["Cybersecurity", "Microservices", "System Design"]
+                    subtitle: "High-Performance Cybersecurity Intelligence",
+                    body: "**A massive, large-scale cybersecurity intelligence platform built for deep packet capture, digital forensics, and threat analysis.**\n\n**System Design Focus:**\n- **C++** applied for raw packet capture speeds and forensics.\n- **Go / Rust** integrated serving high-performance microservices.\n- **Python** utilized for intelligent ML threat analysis.\n\n**Core Values:** Multi-language system architecture demonstrating sheer performance and systems-level security integration.",
+                    tags: ["Cybersecurity", "Multi-Language", "System Design"]
                 }}
             >
                 <CommandRoom />
+            </ProjectDisplay>
+
+            {/* PROJECT 4: EPL - Left Side Z=-175 (Placed at the end) */}
+            <ProjectDisplay 
+                position={[-5, 0, -175]} 
+                title="EPL (English Prog. Lang)" 
+                description="Creator & Architect | Python & C Core"
+                color="#00ffcc"
+                detailContent={{
+                    title: "EPL (English Programming Language)",
+                    subtitle: "A Natural Language Compiler Built from Scratch",
+                    body: "**A production-level programming language interpreted via natural English syntax.**\n\n**What I Built:**\n- Custom Lexer and Parser written in Python and C.\n- Robust language server protocol (LSP) integration.\n- Seamless translation from natural English to executable Bytecode.\n\n**Why It Stands Out:** Building a language from the ground up demonstrates extreme system-level understanding of memory, AST parsing, and execution. It's a completely unique asset.",
+                    tags: ["Compilers", "Python", "C Architecture"]
+                }}
+            >
+                <CompilerBlocks />
             </ProjectDisplay>
         </group>
     )

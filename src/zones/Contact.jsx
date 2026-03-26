@@ -70,16 +70,21 @@ export default function Contact() {
         }
     })
 
-    const handleTransmit = () => {
+    const handleTransmit = (contentObj) => {
         playClick()
         setTransmitting(true)
-        setActiveSection('CONTACT')
+        setActiveSection(contentObj || {
+            title: "ESTABLISH UPLINK",
+            subtitle: "Open Channels",
+            body: "Select a specific communication protocol below to connect with me.\n\n- **Email**: singhabneesh250@gmail.com\n- **LinkedIn**: linkedin.com/in/abneesh-singh001\n- **GitHub**: github.com/abneeshsingh21",
+            tags: ["Comms", "Network"]
+        })
         // Reset transmitting visual after 2 seconds
         setTimeout(() => setTransmitting(false), 2000)
     }
 
     return (
-        <group position={[0, -15, -320]}>
+        <group position={[0, -15, -350]}>
             {/* The Beacon Tower */}
             <mesh position={[0, -5, 0]} ref={beaconRef}>
                 <cylinderGeometry args={[1, 2, 10, 8]} />
@@ -121,9 +126,24 @@ export default function Contact() {
                 <group position={[0, 3, 0]}>
                     <Text fontSize={0.6} color="white" position={[0, 1, 0]}>ESTABLISH UPLINK</Text>
                     
-                    <ContactLink position={[0, 0, 0]} label="Email Protocol" onClick={handleTransmit} />
-                    <ContactLink position={[0, -0.6, 0]} label="LinkedIn Node" onClick={handleTransmit} />
-                    <ContactLink position={[0, -1.2, 0]} label="GitHub Repo" onClick={handleTransmit} />
+                    <ContactLink position={[0, 0, 0]} label="Email Protocol" onClick={() => handleTransmit({
+                        title: "EMAIL PROTOCOL",
+                        subtitle: "Secure Inbox",
+                        body: "Ready to collaborate on the next big breakthrough? Email me directly.\n\nsinghabneesh250@gmail.com\n\n**I am driven by one goal: to build intelligent systems that actually work in the real world.**",
+                        tags: ["Direct Contact", "Business"]
+                    })} />
+                    <ContactLink position={[0, -0.6, 0]} label="LinkedIn Node" onClick={() => handleTransmit({
+                        title: "LINKEDIN NODE",
+                        subtitle: "Professional Network",
+                        body: "Connect with me to stay updated on my latest AI architectures and professional journey.\n\nlinkedin.com/in/abneesh-singh001",
+                        tags: ["Networking", "Career"]
+                    })} />
+                    <ContactLink position={[0, -1.2, 0]} label="GitHub" onClick={() => handleTransmit({
+                        title: "GITHUB",
+                        subtitle: "Open Source Codebase",
+                        body: "Explore my source code, open-source projects, and advanced algorithms.\n\ngithub.com/abneeshsingh21",
+                        tags: ["Open Source", "Code"]
+                    })} />
                 </group>
             </Float>
         </group>

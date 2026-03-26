@@ -64,8 +64,8 @@ export default function Scene() {
       
       <ExplorerLight />
       
-      <StarField count={3000} /> 
-      <SpaceDebris count={600} />
+      <StarField count={1500} /> 
+      <SpaceDebris count={200} />
       {/* <Nebula /> - CAUSING CRASH */}
       <Planets />
 
