@@ -39,6 +39,9 @@ export default function SectionDetails() {
   const { activeSection, setActiveSection } = useStore()
   const isMobile = window.innerWidth < 768
 
+  // Generate a stable randomized ID for the HUD
+  const sysId = useMemo(() => Math.floor(Math.random()*9000)+1000, [activeSection])
+
   // Determine content: direct object or lookup key
   const content = typeof activeSection === 'string' 
     ? contentData[activeSection] 
@@ -48,6 +51,7 @@ export default function SectionDetails() {
 
   // Helper to parse **bold** text and [links]
   const parseBody = (text) => {
+      // (Lines omitted for brevity, keeping only the exact target text)
       if(!text) return null
       
       // Split by newlines first to handle paragraph breaks if needed, or just keep as is.
@@ -92,85 +96,138 @@ export default function SectionDetails() {
       {activeSection && (
         <motion.div 
             className="details-overlay"
-            initial={{ opacity: 0, x: 100 }}
+            initial={{ opacity: 0, x: '100%' }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 100 }}
-            transition={{ duration: 0.5, ease: "circOut" }}
+            exit={{ opacity: 0, x: '100%' }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} // Smooth exponential out
             style={{
                 position: 'fixed',
                 top: 0,
                 right: 0,
-                width: isMobile ? '100%' : '40%', // Responsive Width
+                width: isMobile ? '100%' : '45%', // Wider on desktop for better reading
                 height: '100vh',
-                background: 'rgba(5, 5, 16, 0.75)', // More transparent for premium glass feel
-                backdropFilter: 'blur(20px)', // Stronger blur
-                borderLeft: '1px solid rgba(0, 243, 255, 0.2)',
-                boxShadow: '-10px 0 30px rgba(0,0,0,0.5)',
-                padding: isMobile ? '2rem' : '4rem', // Responsive Padding
+                background: 'linear-gradient(135deg, rgba(5,5,15,0.95) 0%, rgba(0,20,30,0.85) 100%)', // Rich gradient
+                backdropFilter: 'blur(25px)', // Extreme glassmorphsism
+                borderLeft: '2px solid #00f3ff',
+                boxShadow: '-20px 0 50px rgba(0, 243, 255, 0.1), inset 5px 0 30px rgba(0, 243, 255, 0.05)',
+                padding: isMobile ? '2rem' : '4rem',
                 zIndex: 1000,
                 color: 'white',
-                overflowY: 'auto'
+                overflowY: 'auto',
+                display: 'flex',
+                flexDirection: 'column',
             }}
         >
-            <button 
-                onClick={() => setActiveSection(null)}
-                style={{
-                    position: 'absolute',
-                    top: isMobile ? '1.5rem' : '2rem',
-                    right: isMobile ? '1.5rem' : '2rem',
-                    background: 'none',
-                    border: '1px solid #333',
-                    color: '#666',
-                    cursor: 'pointer',
-                    padding: isMobile ? '0.8rem 1.2rem' : '0.5rem 1rem', // Larger touch target on mobile
-                    fontSize: isMobile ? '1rem' : '1.2rem',
-                    zIndex: 1001, // Ensure it's above content
-                    backdropFilter: 'blur(5px)' // improved contrast
-                }}
-            >
-                ✕ CLOSE
-            </button>
-
-            <motion.h1 
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                style={{ fontSize: '3rem', margin: '0 0 0.5rem 0', fontFamily: 'Impact, sans-serif', letterSpacing: '2px', color: '#00f3ff' }}
-            >
-                {content.title}
-            </motion.h1>
+            {/* Cyberpunk Decorative Corner HUDs */}
+            <div style={{ position: 'absolute', top: 0, left: 0, width: '40px', height: '40px', borderTop: '2px solid #00f3ff', borderLeft: '2px solid #00f3ff', opacity: 0.5 }} />
+            <div style={{ position: 'absolute', bottom: '20px', right: '20px', width: '40px', height: '40px', borderBottom: '2px solid rgba(0, 243, 255, 0.3)', borderRight: '2px solid rgba(0, 243, 255, 0.3)' }} />
             
-            <motion.h3
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.1 }}
-                style={{ fontSize: '1.2rem', margin: '0 0 2rem 0', color: '#888', textTransform: 'uppercase', letterSpacing: '4px' }}
-            >
-                {content.subtitle}
-            </motion.h3>
-
-            <motion.div
-                 initial={{ y: 20, opacity: 0 }}
-                 animate={{ y: 0, opacity: 1 }}
-                 transition={{ delay: 0.2 }}
-                 style={{ fontSize: isMobile ? '1rem' : '1.1rem', lineHeight: '1.6', color: '#ddd', whiteSpace: 'pre-line' }}
-            >
-                <p>{parseBody(content.body)}</p>
-            </motion.div>
-
-            <div style={{ marginTop: '3rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                {content.tags.map((tag, i) => (
-                    <span key={i} style={{ 
-                        border: '1px solid #333', 
-                        padding: '0.4rem 1rem', 
-                        fontSize: '0.8rem', 
-                        color: '#aaa',
-                        borderRadius: '20px'
-                    }}>
-                        {tag}
-                    </span>
-                ))}
+            {/* Stylized Identifier Badge */}
+            <div style={{ position: 'absolute', top: '2rem', right: '7rem', opacity: 0.04, fontFamily: 'monospace', fontSize: '4rem', whiteSpace: 'nowrap', pointerEvents: 'none', writingMode: 'vertical-rl', fontWeight: 900 }}>
+                SYS.ARCH.{sysId}
             </div>
 
+            {/* Premium Button */}
+            <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
+                <button 
+                    onClick={() => setActiveSection(null)}
+                    onMouseOver={(e) => { e.target.style.background = 'rgba(0, 243, 255, 0.1)'; e.target.style.boxShadow = '0 0 15px rgba(0,243,255,0.3)' }}
+                    onMouseOut={(e) => { e.target.style.background = 'transparent'; e.target.style.boxShadow = 'none' }}
+                    style={{
+                        background: 'transparent',
+                        border: '1px solid rgba(0, 243, 255, 0.3)',
+                        color: '#00f3ff',
+                        cursor: 'pointer',
+                        padding: isMobile ? '0.8rem 1.2rem' : '0.6rem 1.5rem',
+                        fontSize: isMobile ? '0.9rem' : '1rem',
+                        fontFamily: 'monospace',
+                        letterSpacing: '2px',
+                        transition: 'all 0.2s ease',
+                        backdropFilter: 'blur(5px)',
+                        zIndex: 1001
+                    }}
+                >
+                    ✕ CLOSE UPLINK
+                </button>
+            </div>
+
+            <div style={{ marginTop: '2rem', flex: 1, position: 'relative', zIndex: 10 }}>
+                <motion.h1 
+                    initial={{ y: 30, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.1, duration: 0.6 }}
+                    style={{ 
+                        fontSize: isMobile ? '2.5rem' : '3.5rem', 
+                        margin: '0 0 0.5rem 0', 
+                        fontFamily: '"Arial Black", Impact, sans-serif', 
+                        letterSpacing: '4px', 
+                        color: '#00f3ff',
+                        textShadow: '0 0 20px rgba(0, 243, 255, 0.4)'
+                    }}
+                >
+                    {content.title}
+                </motion.h1>
+                
+                <motion.h3
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.2, duration: 0.6 }}
+                    style={{ 
+                        fontSize: '1.1rem', 
+                        margin: '0 0 3rem 0', 
+                        color: '#b0bec5', 
+                        textTransform: 'uppercase', 
+                        letterSpacing: '6px',
+                        fontFamily: 'monospace',
+                        borderBottom: '1px solid rgba(0, 243, 255, 0.2)',
+                        paddingBottom: '1rem',
+                        display: 'inline-block'
+                    }}
+                >
+                    :: {content.subtitle}
+                </motion.h3>
+
+                <motion.div
+                     initial={{ y: 20, opacity: 0 }}
+                     animate={{ y: 0, opacity: 1 }}
+                     transition={{ delay: 0.3, duration: 0.6 }}
+                     style={{ 
+                         fontSize: isMobile ? '1rem' : '1.15rem', 
+                         lineHeight: '1.8', 
+                         color: '#e0e0e0', 
+                         whiteSpace: 'pre-line',
+                         fontFamily: 'system-ui, -apple-system, sans-serif',
+                         fontWeight: 300,
+                         textShadow: '0 1px 2px rgba(0,0,0,0.8)'
+                     }}
+                >
+                    <p>{parseBody(content.body)}</p>
+                </motion.div>
+
+                <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.5, duration: 0.8 }}
+                    style={{ marginTop: '4rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}
+                >
+                    {content.tags.map((tag, i) => (
+                        <span key={i} style={{ 
+                            border: '1px solid rgba(0, 243, 255, 0.3)', 
+                            background: 'rgba(0, 243, 255, 0.05)',
+                            padding: '0.6rem 1.2rem', 
+                            fontSize: '0.85rem', 
+                            color: '#00f3ff',
+                            borderRadius: '4px',
+                            fontFamily: 'monospace',
+                            letterSpacing: '1px',
+                            boxShadow: 'inset 0 0 10px rgba(0,243,255,0.05)'
+                        }}>
+                            <span style={{opacity: 0.5, marginRight: '8px'}}>{'>_'}</span> 
+                            {tag}
+                        </span>
+                    ))}
+                </motion.div>
+            </div>
         </motion.div>
       )}
     </AnimatePresence>

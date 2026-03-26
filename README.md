@@ -18,6 +18,8 @@ It acts as the central hub for my flagship developments in Systems Architecture,
 ### 🛠️ Architecture & Tech Stack
 The environment features a unified, heavily optimized 3D scene boasting dynamic lighting, real-time mouse parallax "window" mechanics, bespoke post-processing (including cinematic Bloom, Film Grain, and DSLR Vignettes), and CatmullRom spline-based camera flight paths bridging timeline nodes and floating 3D hologram servers.
 
+Additionally, the UI provides **fully bespoke 2D Cyberpunk Data Panels** featuring intense glassmorphism, glowing HUD borders, and flawless Framer Motion staggering for accessing granular project data.
+
 <p align="center">
   <img src="https://skillicons.dev/icons?i=react,vite,threejs,js,html,css,git" alt="Tech Stack" />
 </p>
